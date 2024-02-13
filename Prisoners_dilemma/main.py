@@ -1,4 +1,5 @@
-
+import statistics
+#from evolution_model import evolvelist
 from players.red import Red 
 from players.green import Green 
 from players.tit_for_tat import TitForTat
@@ -18,7 +19,7 @@ def game(Player1, Player2, rounds):
 
     
         
-def set(player_list, rounds):
+def p_set(player_list, rounds):
     
     # Setup the scoring
     set_scores = []
@@ -38,7 +39,7 @@ def set(player_list, rounds):
 
 def tournament(player_list, num_sets, num_rounds):
         for _ in range(num_sets):
-            print(set(player_list, num_rounds))
+            print(p_set(player_list, num_rounds))
 
 def prisoners_dilemma(first_player_choice, second_player_choice):
     outcome = (first_player_choice, second_player_choice)
@@ -69,8 +70,29 @@ print(game(G,R,10)) # expected output: [0, 50]
 print(game(T4T, N, 10))
 
 # Test one set of 100 rounds between all players
-print(set(player_list, 100))
+print(p_set(player_list, 100))
 
 # Test a simple tournament
 tournament(player_list, 5, 250)
 
+
+def evolvelist(player_list, rounds, pool_size, generations):
+    for _ in range(pool_size):
+        player_list += player_list 
+        
+    for _ in range(generations):
+        set_scores = p_set(player_list, rounds)
+        previous_players = set()
+        for i in range(len(player_list )- 1, -1, -1):
+            if player_list[i] not in previous_players:
+                previous_players.add(player_list[i])
+                if set_scores[i] < statistics.median(set_scores):
+                    player_list.pop(i)
+                else:
+                    player_list.append(player_list[i])
+    
+
+
+
+evolvelist(player_list, 250, 3, 50)
+print(player_list)

@@ -1,10 +1,13 @@
 import statistics
+
 import prisoner_dilemma
+
 from players.red import Red 
 from players.green import Green 
 from players.tit_for_tat import TitForTat
 from players.nasty import Nasty
 from players.random import Random
+
         
 G = Green()
 R = Red()

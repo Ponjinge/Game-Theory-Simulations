@@ -1,3 +1,4 @@
+import statistics
 
 def game(Player1, Player2, rounds):
     previous_rounds = []

@@ -1,5 +1,3 @@
-import statistics
-
 import prisoner_dilemma
 
 from players.red import Red 

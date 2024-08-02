@@ -15,37 +15,45 @@ class Game:
     def play(self):
         total=0
         for die in self.Dice:
-            total =+ die.roll()
+            total += die.roll()
         return total
 
-class Bet:
-    def __init__(self, Game):
-        self.Game = Game
+class Player:
+    def __init__(self, balance):
+        self.balance = balance
 
-    def bet(self, amount, number, guess):
+    def __bet__(self, Game, amount, number, guess):
         
         # To do: Add real odds to the bet
         odds = 2
         
         if guess == 'over':
-            if self.Game.play() > number:
+            if Game.play() > number:
                 return amount*odds
             else:
                 return 0
         elif guess == 'under':
-            if self.Game.play() < number:
+            if Game.play() < number:
                 return amount*odds
             else:
                 return 0
         else:
-            if self.Game.play() == number:
+            if Game.play() == number:
                 return amount*odds
-
+    
+    def place_bet(self, Game, amount, number, guess):
+        self.balance -= amount
+        self.balance += self.__bet__(Game, amount, number, guess)
+        return self.balance
 
 dice = Dice(6)
 dice_list = [dice]
 game = Game(dice_list)
-bet = Bet(game)
+player = Player(100)
+
+for i in range(100):
+    player.place_bet(game, player.balance*0.10, 3, 'over')
+    print(player.balance)
 
 
-print(bet.bet(10, 3, 'over'))
+

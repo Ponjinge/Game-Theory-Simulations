@@ -46,13 +46,16 @@ class Player:
         self.balance += self.__bet__(Game, amount, number, guess)
         return self.balance
 
-dice = Dice(6)
-dice_list = [dice]
+#Main
+
+dice6 = Dice(6)
+dice10 = Dice(10)
+dice_list = [dice6, dice10]
 game = Game(dice_list)
 player = Player(100)
 
-for i in range(100):
-    player.place_bet(game, player.balance*0.10, 3, 'over')
+for i in range(1000):
+    player.place_bet(game, player.balance*0.50, 7, 'over')
     print(player.balance)
 
 
